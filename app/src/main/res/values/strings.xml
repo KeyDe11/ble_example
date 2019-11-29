@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ble example</string>
+    <string name="notifyTitle">need location</string>
+    <string name="gpsNotifyMsg">please click yes</string>
+    <string name="cancel">no</string>
+    <string name="setting">yes</string>
+    <string name="save">save to database</string>
+    <string name="isEmpty">Database is empty</string>
+</resources>

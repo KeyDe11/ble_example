@@ -1,0 +1,53 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="5dp"
+        android:onClick="@{() -> handler.click(viewModel)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@{viewModel.title}"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_uuid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{viewModel.uuid}"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <data class="AdapterServiceRow">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.bleexample.viewmodels.DeviceDetailsViewModel" />
+
+        <variable
+            name="handler"
+            type="com.example.bleexample.callbacks.ClickServiceCallback" />
+    </data>
+
+</layout>
