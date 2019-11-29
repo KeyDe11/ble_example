@@ -18,6 +18,8 @@ import com.clj.fastble.exception.BleException;
 import com.clj.fastble.utils.HexUtil;
 import com.example.bleexample.R;
 import com.example.bleexample.adapters.CharacteristicAdapter;
+import com.example.bleexample.comm.Observer;
+import com.example.bleexample.comm.ObserverManager;
 import com.example.bleexample.database.DatabaseClient;
 import com.example.bleexample.databinding.CharacteristicBinding;
 import com.example.bleexample.models.Characteristic;
@@ -35,7 +37,7 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class CharacteristicActivity extends AppCompatActivity {
+public class CharacteristicActivity extends AppCompatActivity implements Observer {
     private CharacteristicBinding binding;
     private BleDevice bleDevice;
     private String serviceUuid;
@@ -64,6 +66,7 @@ public class CharacteristicActivity extends AppCompatActivity {
         getDevice();
         if (!(mac != null && !mac.equals(""))) {
             getUuid();
+            ObserverManager.getInstance().addObserver(this);
         }
     }
 
@@ -201,5 +204,16 @@ public class CharacteristicActivity extends AppCompatActivity {
                         Log.d("", e.getMessage());
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
+    }
+
+    @Override
+    public void disConnected(BleDevice bleDevice) {
+        finish();
     }
 }

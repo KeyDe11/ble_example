@@ -26,6 +26,7 @@ import com.example.bleexample.LocationPermission;
 import com.example.bleexample.R;
 import com.example.bleexample.adapters.DeviceAdapter;
 import com.example.bleexample.callbacks.ScanButtonCallback;
+import com.example.bleexample.comm.ObserverManager;
 import com.example.bleexample.database.DatabaseClient;
 import com.example.bleexample.databinding.BindingScanActivity;
 import com.example.bleexample.models.Device;
@@ -312,6 +313,7 @@ public class ScanActivity extends AppCompatActivity implements ScanButtonCallbac
                 devices.get(index).setClick(false);
                 progressDialog.dismiss();
                 actualData(devices);
+                ObserverManager.getInstance().notifyObserver(bleDevice);
 
 
                 if (isActiveDisConnected) {

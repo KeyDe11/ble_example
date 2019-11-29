@@ -21,6 +21,8 @@ import com.clj.fastble.data.BleDevice;
 import com.example.bleexample.R;
 import com.example.bleexample.adapters.DeviceAdapter;
 import com.example.bleexample.adapters.ServiceAdapter;
+import com.example.bleexample.comm.Observer;
+import com.example.bleexample.comm.ObserverManager;
 import com.example.bleexample.database.DatabaseClient;
 import com.example.bleexample.databinding.BindingDeviceDetailsActivity;
 import com.example.bleexample.models.ServiceCharacteristic;
@@ -37,7 +39,7 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class DeviceDetailsActivity extends AppCompatActivity {
+public class DeviceDetailsActivity extends AppCompatActivity implements Observer {
 
     public static final String DETAILS_KEY = "bleDevice";
     private BleDevice bleDevice;
@@ -62,6 +64,7 @@ public class DeviceDetailsActivity extends AppCompatActivity {
         getDevice();
         getDataWithDatabase();
         if (!(mac != null && !mac.equals(""))) {
+            ObserverManager.getInstance().addObserver(this);
             if (bleDevice.getName() != null) {
                 binding.tvTitle.setText(bleDevice.getName());
             } else {
@@ -241,5 +244,15 @@ public class DeviceDetailsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailsActivity.this));
 
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void disConnected(BleDevice bleDevice) {
+        finish();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }
